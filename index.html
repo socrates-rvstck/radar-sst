@@ -983,6 +983,32 @@ footer {
     <span>Semana 30 mar.–06 abr. 2026 · Edição #12</span>
   </div>
 </footer>
+<script>
+  function sendHeight() {
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
 
+    window.parent.postMessage(
+      { type: "radar-sst-height", height },
+      "*"
+    );
+  }
+
+  window.addEventListener("load", () => {
+    sendHeight();
+    setTimeout(sendHeight, 300);
+    setTimeout(sendHeight, 1000);
+  });
+
+  window.addEventListener("resize", sendHeight);
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(sendHeight);
+  }
+</script>
 </body>
 </html>
